@@ -21,9 +21,9 @@ if hist_button:  # Al hacer click
     st.plotly_chart(histogram_odometer, use_container_width=True)
 
 # Se crea un botón para hacer un gráfico de dispersión.
-disp_button = st.button('Crea un gráfico de dispersión')
+scatter_button = st.button('Crea un gráfico de dispersión')
 
-if hist_button:  # Al hacer click
+if scatter_button:  # Al hacer click
     # Escribir un mensaje
     st.write('Creación de un gráfico de dispersión.')
 
