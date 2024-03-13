@@ -4,23 +4,28 @@ import streamlit as st
 
 car_data = pd.read_csv('vehicles_us.csv')  # Se leen los datos
 
+# Se completan los datos ausentes en algunas columnas
+car_data = car_data.fillna({'model_year': 0, 'cylinders': 0,
+                           'odometer': 0, 'is_4wd': 0, 'paint_color': 'no available'})
+
+# Se realiza el cambio del tipo de datos de algunas columnas
+car_data = car_data.astype(
+    {'price': 'float', 'model_year': 'int', 'cylinders': 'int', 'odometer': 'int'})
 
 st.header('Proyecto final sprint 5: Curso de análisis de datos')
 
 st.subheader('Vista de los datos')
 
-# -- Create three columns
+# -- Se crean tres columnas, solo para mejorar la visualización del contenido.
 col1, col2, col3 = st.columns([5, 5, 20])
-# -- Put the image in the middle column
-# - Commented out here so that the file will run without having the image downloaded
-# with col2:
-# st.image("streamlit.png", width=200)
-# -- Put the title in the last column
+
+# Se escribe el título de las columnas
 with col3:
     st.title("Vehículos")
-# -- We use the first column here as a dummy to add a space to the left
 
-# -- Get the user input
+# Se captura los las entradas de los usuarios, y nuevamente se crea una columna ('col) 'dummy' para mejorar la visualización
+# Se crean los tipo de filtros, un 'slicer' para elegir el año del modelo del vehículo
+# Y una lista de selección para elegir el tipo de vehículo
 year_col, col, type_col = st.columns([5, 5, 5])
 
 with year_col:
@@ -39,15 +44,14 @@ with type_col:
          "offroad", "other", "pickup", "sedan", "SUV", "truck ", "wagon", "van"),
     )
 
-# -- Apply the type filter
+# Se aplica el tipo de filtros al dataset
 if type_choice == "All":
     filtered_df = car_data[(car_data.model_year == year_choice)]
 else:
     filtered_df = car_data[(car_data.type == type_choice) &
                            (car_data.model_year == year_choice)]
-# -- Apply the year filter given by the user
-# filtered_df = car_data[(car_data.model_year == year_choice)]
 
+# Se muestra el dataset filtrado
 
 st.table(filtered_df.sort_values(by='price').head(10))
 
