@@ -4,6 +4,7 @@ import streamlit as st
 
 car_data = pd.read_csv('vehicles_us.csv')  # Se leen los datos
 
+
 st.header('Proyecto final sprint 5: Curso de análisis de datos')
 
 st.subheader('Vista de los datos')
